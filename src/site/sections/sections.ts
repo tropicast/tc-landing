@@ -1,8 +1,10 @@
-/** The page's sections, in order: the header's links and the wireframe follow this list. */
+import { content } from "@/site/content";
+
+/** The page's sections, in order: the header's links and the page follow this list. */
 export const sections = [
-    { id: "how-it-works", title: "How it works", inNav: true },
-    { id: "features", title: "Features", inNav: true },
-    { id: "demo", title: "Listen", inNav: true },
-    { id: "pricing", title: "Pricing", inNav: true },
-    { id: "faq", title: "FAQ", inNav: true },
+    { id: "how-it-works", title: content.howItWorks.eyebrow },
+    { id: "features", title: content.features.eyebrow },
+    { id: "demo", title: content.demo.eyebrow },
+    { id: "pricing", title: content.pricing.eyebrow },
+    { id: "faq", title: content.faq.eyebrow },
 ] as const;

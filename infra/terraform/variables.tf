@@ -52,3 +52,9 @@ variable "vercel_apex_ipv4" {
   type        = string
   default     = "76.76.21.21"
 }
+
+variable "demo_station" {
+  description = "Station the site's live demo plays, as tenant-slug/station-slug (its plan must include the website player). Null: no demo, the section offers the sign-up."
+  type        = string
+  default     = null
+}

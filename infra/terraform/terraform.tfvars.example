@@ -5,3 +5,6 @@
 # Zone ID of tropicastradio.com: 32 hex characters (Cloudflare → the domain → Overview → API → Zone ID),
 # not the domain name. Leave null to manage DNS by hand.
 cloudflare_zone_id = null
+
+# Station the live demo plays (tenant-slug/station-slug); its plan must include the website player.
+# demo_station = "tenant/station"

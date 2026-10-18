@@ -35,7 +35,12 @@ Mobile first: one column below `md`. In order: header (logo, links to the sectio
 in_, _Start free_), hero (headline, two calls to action, product picture), how it works (three steps), features
 (grid of six), live demo (player), pricing (four plans), FAQ, footer (legal links). Every section uses `Section`:
 same width (`max-w-container`), gutters (16 px, 32 px from `md`) and vertical rhythm (64 px, 96 px from `md`), with
-alternating backgrounds. The content comes in #5.
+alternating backgrounds.
+
+## Content
+
+All copy is in `src/site/content.ts`: the sections render from it. Plan limits come from tc-dashboard `Plan.cs` and
+prices from its `PRICE_LABEL_*` variables (what the app shows): change both together. Write only what ships.
 
 ## Accessibility
 
