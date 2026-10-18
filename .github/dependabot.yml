@@ -1,0 +1,50 @@
+# Dependency updates: weekly pull requests for the npm packages and the workflow
+# actions. Minor and patch updates are grouped; security updates come as soon as
+# an advisory is published. Untitled UI's components are copied into src/ (not an
+# npm package): update them with `npx untitledui@latest add`, not with Dependabot.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(npm)"
+    groups:
+      # eslint-config-next is pinned to Next's version: one PR for both, majors included.
+      next:
+        patterns: [next, eslint-config-next]
+      react:
+        patterns: [react, react-dom, "@types/react", "@types/react-dom"]
+      # What Untitled UI's components are built on: move together so they keep matching.
+      react-aria:
+        patterns: [react-aria, react-aria-components, react-stately, "@react-aria/*", "@react-stately/*", "@internationalized/*"]
+        update-types: [minor, patch]
+      tailwind:
+        patterns: [tailwindcss, "@tailwindcss/*", "tailwindcss-*", prettier-plugin-tailwindcss]
+        update-types: [minor, patch]
+      npm-production:
+        dependency-type: production
+        update-types: [minor, patch]
+      npm-development:
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # Node types follow the Node runtime (24: .nvmrc, engines, Vercel), not the latest Node.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "deps(actions)"
+    groups:
+      actions:
+        patterns: ["*"]
+        update-types: [minor, patch]

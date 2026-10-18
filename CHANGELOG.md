@@ -6,4 +6,4 @@ All notable changes to the landing page. Format: [Keep a Changelog](https://keep
 
 ### Added
 
-- Next.js project from the Untitled UI React starter (teal brand), with ESLint, Prettier, Vitest, Playwright and CI (#2).
+- Next.js project from the Untitled UI React starter (teal brand), with ESLint, Prettier, Vitest, Playwright, CI and Dependabot (#2).
