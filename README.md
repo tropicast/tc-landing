@@ -6,7 +6,7 @@ The public site at **https://www.tropicastradio.com**: what Tropicast is, the pl
 - **Stack**: Next.js (App Router, TypeScript), pages prerendered as static content, hosted on Vercel.
 - **Design system**: [Untitled UI React](https://www.untitledui.com/react) (open source, MIT), the same as the dashboard:
   React Aria Components, Tailwind CSS v4, `@untitledui/icons`, Inter, teal brand.
-- **Infrastructure**: Terraform for the Vercel project and the Cloudflare DNS records (#4).
+- **Infrastructure**: Terraform for the Vercel project and the Cloudflare DNS records: [docs/infrastructure.md](docs/infrastructure.md).
 
 ## Develop
 
