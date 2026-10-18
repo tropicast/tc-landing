@@ -1,6 +1,7 @@
 variable "vercel_team" {
-  description = "Vercel team slug or ID that owns the project."
+  description = "Vercel team slug or ID that owns the project. Null: the token's own account (a personal Hobby account cannot be read as a team)."
   type        = string
+  default     = null
 }
 
 variable "project_name" {
@@ -28,9 +29,14 @@ variable "domain" {
 }
 
 variable "cloudflare_zone_id" {
-  description = "Cloudflare zone ID of the domain. Null skips the DNS records."
+  description = "Cloudflare zone ID of the domain (32 hex characters, not the domain name). Null skips the DNS records."
   type        = string
   default     = null
+
+  validation {
+    condition     = var.cloudflare_zone_id == null || can(regex("^[0-9a-f]{32}$", var.cloudflare_zone_id))
+    error_message = "cloudflare_zone_id is the zone's ID (32 hex characters, Cloudflare → the domain → Overview → API), not its name."
+  }
 }
 
 # Vercel's documented targets for a domain on external DNS. Its domain card may show a
