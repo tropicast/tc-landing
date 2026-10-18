@@ -37,10 +37,20 @@ in_, _Start free_), hero (headline, two calls to action, product picture), how i
 same width (`max-w-container`), gutters (16 px, 32 px from `md`) and vertical rhythm (64 px, 96 px from `md`), with
 alternating backgrounds.
 
-## Content
+## Content and languages
 
-All copy is in `src/site/content.ts`: the sections render from it. Plan limits come from tc-dashboard `Plan.cs` and
-prices from its `PRICE_LABEL_*` variables (what the app shows): change both together. Write only what ships.
+The page exists in French (`/fr`, the default) and English (`/en`). All copy is in `src/site/i18n/`: `en.ts` defines
+the shape (`Content`), `fr.ts` follows it, and tests check they have the same keys, the same prices and limits, and
+French typography (narrow no-break space before `: ; ! ?`, no-break space in `« »`, amounts and units, typographic
+apostrophe). Plan limits come from tc-dashboard `Plan.cs` and prices from its `PRICE_LABEL_*` variables (what the app
+shows): change every language together. Write only what ships.
+
+- `src/proxy.ts` sends a path without a language (`/`, `/pricing`) to the visitor's, from `Accept-Language`
+  (French by default), with `Vary: Accept-Language`.
+- Each page declares the other with `hreflang`, plus `x-default` (`/`). The header and footer link to the other
+  language, named in its own language.
+- An unknown path is a 404 page in the language of its URL.
+- Adding a language (Malagasy, for instance): one more file in `src/site/i18n/`, and its code in `locales`.
 
 ## Accessibility
 

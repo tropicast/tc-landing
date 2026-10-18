@@ -1,11 +1,10 @@
 import { ChevronDown } from "@untitledui/icons";
-import { content } from "@/site/content";
+import type { Content } from "@/site/i18n";
 import { Section } from "@/site/sections/section";
 
-const { faq } = content;
-
 /** Native disclosure widgets: keyboard and screen readers work without script, and search engines see the answers. */
-export function Faq() {
+export function Faq({ t }: { t: Content }) {
+    const { faq } = t;
     return (
         <Section id="faq" eyebrow={faq.eyebrow} title={faq.title} muted>
             <div className="max-w-3xl divide-y divide-secondary border-y border-secondary">

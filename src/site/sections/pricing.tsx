@@ -1,19 +1,18 @@
 import { Check } from "@untitledui/icons";
 import { Badge } from "@/components/base/badges/badges";
 import { Button } from "@/components/base/buttons/button";
-import { content } from "@/site/content";
+import type { Content } from "@/site/i18n";
 import { SIGN_UP_URL } from "@/site/links";
 import { Section } from "@/site/sections/section";
 import { cx } from "@/utils/cx";
 
-const { pricing } = content;
-
-export function Pricing() {
+export function Pricing({ t }: { t: Content }) {
+    const { pricing } = t;
     return (
         <Section id="pricing" eyebrow={pricing.eyebrow} title={pricing.title} intro={pricing.intro}>
             <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                 {pricing.plans.map((plan) => {
-                    const highlighted = "highlighted" in plan && plan.highlighted;
+                    const highlighted = plan.highlighted === true;
                     return (
                         <li
                             key={plan.id}
@@ -32,7 +31,7 @@ export function Pricing() {
                             </div>
                             <p className="mt-4 flex items-baseline gap-1">
                                 <span className="text-display-md font-semibold text-primary">{plan.price}</span>
-                                {"period" in plan && <span className="text-md text-tertiary">{plan.period}</span>}
+                                {plan.period && <span className="text-md text-tertiary">{plan.period}</span>}
                             </p>
                             <p className="mt-2 text-md text-tertiary">{plan.summary}</p>
                             <Button size="lg" color={highlighted ? "primary" : "secondary"} href={SIGN_UP_URL} className="mt-6 w-full">

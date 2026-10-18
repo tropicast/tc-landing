@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { BarChart07, Globe01, Microphone01, Repeat01, Signal01, Zap } from "@untitledui/icons";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
-import { type FeatureIcon, content } from "@/site/content";
+import type { Content, FeatureIcon } from "@/site/i18n";
 import { Section } from "@/site/sections/section";
 
 const icons: Record<FeatureIcon, FC<{ className?: string }>> = {
@@ -13,9 +13,8 @@ const icons: Record<FeatureIcon, FC<{ className?: string }>> = {
     chart: BarChart07,
 };
 
-const { features } = content;
-
-export function Features() {
+export function Features({ t }: { t: Content }) {
+    const { features } = t;
     return (
         <Section id="features" eyebrow={features.eyebrow} title={features.title} intro={features.intro}>
             <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">

@@ -1,3 +1,6 @@
+/** The site itself: canonical and alternate links, Open Graph URLs. */
+export const SITE_URL = "https://www.tropicastradio.com";
+
 /** Where the site sends people: the app (sign-up, sign-in, legal pages, downloads). */
 export const APP_URL = "https://app.tropicastradio.com";
 export const SIGN_UP_URL = `${APP_URL}/signup`;

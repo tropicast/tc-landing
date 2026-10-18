@@ -1,13 +1,12 @@
 import { Headphones01, PlayCircle } from "@untitledui/icons";
 import { Badge, BadgeWithDot } from "@/components/base/badges/badges";
 import { Button } from "@/components/base/buttons/button";
-import { content } from "@/site/content";
+import type { Content } from "@/site/i18n";
 import { SIGN_UP_URL } from "@/site/links";
 
-const { hero } = content;
-
 /** Headline, the two calls to action, and a picture of what a listener sees. */
-export function Hero() {
+export function Hero({ t }: { t: Content }) {
+    const { hero } = t;
     return (
         <section aria-labelledby="hero-title" className="overflow-hidden bg-primary py-16 md:py-24">
             <div className="mx-auto grid max-w-container items-center gap-12 px-4 md:px-8 lg:grid-cols-2 lg:gap-16">
@@ -29,15 +28,15 @@ export function Hero() {
                     </div>
                     <p className="mt-4 text-sm text-tertiary">{hero.note}</p>
                 </div>
-                <StationCard />
+                <StationCard t={t} />
             </div>
         </section>
     );
 }
 
 /** An illustration of a station on air, drawn with the design system (no screenshot to keep up to date). */
-function StationCard() {
-    const { card } = hero;
+function StationCard({ t }: { t: Content }) {
+    const { card } = t.hero;
     return (
         <div aria-hidden="true" className="relative mx-auto w-full max-w-md lg:max-w-none">
             <div className="absolute -inset-8 -z-0 rounded-[40px] bg-brand-secondary opacity-60 blur-2xl" />
@@ -66,7 +65,7 @@ function StationCard() {
                     <span className="inline-flex items-center gap-2 text-sm text-tertiary">
                         <Headphones01 className="size-5 text-fg-quaternary" />
                         <span>
-                            <span className="font-semibold text-secondary">1,284</span> {card.listeners}
+                            <span className="font-semibold text-secondary">{(1284).toLocaleString(t.numberLocale)}</span> {card.listeners}
                         </span>
                     </span>
                     <span className="text-sm text-tertiary">{card.format}</span>

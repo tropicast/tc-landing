@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { ButtonUtility } from "@/components/base/buttons/button-utility";
 
 /** Switches between light and dark. The first visit follows the system (`prefers-color-scheme`). */
-export function ThemeToggle() {
+export function ThemeToggle({ light, dark: darkLabel }: { light: string; dark: string }) {
     const { resolvedTheme, setTheme } = useTheme();
     // The theme is only known in the browser: the server render and hydration show the light icon.
     const hydrated = useSyncExternalStore(
@@ -20,7 +20,7 @@ export function ThemeToggle() {
         <ButtonUtility
             color="tertiary"
             icon={dark ? Sun : Moon01}
-            tooltip={dark ? "Light theme" : "Dark theme"}
+            tooltip={dark ? light : darkLabel}
             onClick={() => setTheme(dark ? "light" : "dark")}
             data-testid="theme-toggle"
         />
