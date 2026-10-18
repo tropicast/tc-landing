@@ -17,7 +17,7 @@ terraform {
   backend "s3" {}
 }
 
-# Reads VERCEL_API_TOKEN. team: the Vercel team that owns the project.
+# Reads VERCEL_API_TOKEN. team: the Vercel team that owns the project; unset, the token's own account.
 provider "vercel" {
   team = var.vercel_team
 }

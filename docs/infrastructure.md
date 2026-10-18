@@ -23,8 +23,8 @@ State: the shared bucket (`tropicast-tfstate`), key `tc-landing/landing.tfstate`
     - `TF_STATE_BUCKET` = `tropicast-tfstate`, `TF_STATE_LOCATION` = `fsn1`;
     - `TFVARS`, for example:
         ```hcl
-        vercel_team        = "<team slug>"
-        cloudflare_zone_id = "<zone ID of tropicastradio.com>"
+        vercel_team        = "<team slug>"                     # leave out for a personal account
+        cloudflare_zone_id = "<32 hex: Cloudflare → Overview → API → Zone ID>"
         ```
 
 ## Plan and apply

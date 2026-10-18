@@ -1,5 +1,7 @@
 # Copy to terraform.tfvars (git-ignored) and edit. In CI: the TFVARS repository variable.
-vercel_team = "tropicast"
+# Vercel team slug or ID (Settings → General). Leave it out for a personal account.
+# vercel_team = "tropicast"
 
-# Cloudflare zone of tropicastradio.com; leave null to manage DNS by hand.
+# Zone ID of tropicastradio.com: 32 hex characters (Cloudflare → the domain → Overview → API → Zone ID),
+# not the domain name. Leave null to manage DNS by hand.
 cloudflare_zone_id = null
