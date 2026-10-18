@@ -25,6 +25,7 @@ State: the shared bucket (`tropicast-tfstate`), key `tc-landing/landing.tfstate`
         ```hcl
         vercel_team        = "<team slug>"                     # leave out for a personal account
         cloudflare_zone_id = "<32 hex: Cloudflare → Overview → API → Zone ID>"
+        demo_station       = "<tenant-slug>/<station-slug>"   # optional: the live demo (#5)
         ```
 
 ## Plan and apply

@@ -35,12 +35,3 @@ export function Section({
         </section>
     );
 }
-
-/** A grey block standing for content to come (#5): keeps the wireframe's proportions. */
-export function Placeholder({ label, className }: { label: string; className?: string }) {
-    return (
-        <div className={cx("flex items-center justify-center rounded-xl border border-dashed border-primary p-8 text-sm text-quaternary", className)}>
-            {label}
-        </div>
-    );
-}

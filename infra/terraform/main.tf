@@ -55,3 +55,13 @@ resource "cloudflare_dns_record" "apex" {
   proxied = false
   comment = "tc-landing on Vercel, redirects to www (Terraform)"
 }
+
+# Read at build time by the demo section (src/site/links.ts). Public: it names a public page.
+resource "vercel_project_environment_variable" "demo_station" {
+  count      = var.demo_station == null ? 0 : 1
+  project_id = vercel_project.landing.id
+  key        = "DEMO_STATION"
+  value      = var.demo_station
+  target     = ["production", "preview"]
+  sensitive  = false
+}
