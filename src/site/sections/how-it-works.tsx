@@ -1,13 +1,12 @@
 import { Button } from "@/components/base/buttons/button";
-import { content } from "@/site/content";
+import type { Content } from "@/site/i18n";
 import { INSTALL_GUIDE_URL, downloadUrl } from "@/site/links";
 import { DownloadButton } from "@/site/sections/download-button";
 import { Section } from "@/site/sections/section";
 
-const { howItWorks } = content;
-
 /** Three numbered steps, then the app's downloads (the hero's "Download the app" lands here). */
-export function HowItWorks() {
+export function HowItWorks({ t }: { t: Content }) {
+    const { howItWorks } = t;
     return (
         <Section id="how-it-works" eyebrow={howItWorks.eyebrow} title={howItWorks.title} intro={howItWorks.intro} muted>
             <ol className="grid gap-8 md:grid-cols-3">

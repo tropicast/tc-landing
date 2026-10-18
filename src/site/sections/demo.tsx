@@ -1,18 +1,17 @@
 import { Button } from "@/components/base/buttons/button";
-import { content } from "@/site/content";
+import type { Content } from "@/site/i18n";
 import { SIGN_UP_URL, demoEmbedUrl } from "@/site/links";
 import { DemoPlayer } from "@/site/sections/demo-player";
 import { Section } from "@/site/sections/section";
 
-const { demo, hero } = content;
-
 /** Read at build time: the page is static. */
-export function Demo({ station = process.env.DEMO_STATION }: { station?: string }) {
+export function Demo({ t, station = process.env.DEMO_STATION }: { t: Content; station?: string }) {
+    const { demo, hero } = t;
     const embedUrl = demoEmbedUrl(station);
     return (
         <Section id="demo" eyebrow={demo.eyebrow} title={demo.title} intro={embedUrl ? demo.intro : undefined} muted>
             {embedUrl ? (
-                <DemoPlayer embedUrl={embedUrl} />
+                <DemoPlayer embedUrl={embedUrl} title={demo.title} play={demo.play} loadNote={demo.loadNote} />
             ) : (
                 <div className="flex flex-col items-start gap-4">
                     <p className="max-w-xl text-lg text-tertiary">{demo.unavailable}</p>

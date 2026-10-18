@@ -1,10 +1,10 @@
 import { Logo } from "@/site/brand/logo";
-import { content } from "@/site/content";
+import { type Content, type Locale } from "@/site/i18n";
+import { LanguageSwitch } from "@/site/layout/language-switch";
 import { APP_URL, PRIVACY_URL, TERMS_URL } from "@/site/links";
 
-const { footer } = content;
-
-export function SiteFooter() {
+export function SiteFooter({ t }: { t: Content }) {
+    const { footer } = t;
     const links = [
         { label: footer.download, href: "#download" },
         { label: footer.signIn, href: APP_URL },
@@ -24,7 +24,10 @@ export function SiteFooter() {
                         </li>
                     ))}
                 </ul>
-                <p className="text-sm text-tertiary">© {new Date().getFullYear()} Tropicast</p>
+                <div className="flex items-center gap-6">
+                    <LanguageSwitch current={t.lang as Locale} label={t.nav.language} />
+                    <p className="text-sm text-tertiary">© {new Date().getFullYear()} Tropicast</p>
+                </div>
             </div>
         </footer>
     );

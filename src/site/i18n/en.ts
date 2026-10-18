@@ -1,10 +1,12 @@
 /**
- * The page's words, in one place: the sections render from this object, and #6 adds the French next to it.
+ * The page's words in English. Every language has the same shape (`Content`); the French is in `fr.ts`.
  * Plan limits come from tc-dashboard `Plan.cs` and prices from its `PRICE_LABEL_*` variables (what the app shows);
- * change both together. Every claim here is something that ships today.
+ * change every language together. Every claim here is something that ships today.
  */
 
 export type FeatureIcon = "microphone" | "repeat" | "zap" | "signal" | "globe" | "chart";
+
+export type Feature = { icon: FeatureIcon; title: string; text: string };
 
 export type Plan = {
     id: "free" | "starter" | "growth" | "pro";
@@ -16,8 +18,12 @@ export type Plan = {
     features: string[];
 };
 
-export const content = {
-    nav: { signIn: "Sign in", startFree: "Start free", menu: "Menu", close: "Close menu", sections: "Sections" },
+export const en = {
+    lang: "en",
+    languageName: "English",
+    nav: { signIn: "Sign in", startFree: "Start free", menu: "Menu", close: "Close menu", sections: "Sections", language: "Language" },
+    theme: { light: "Light theme", dark: "Dark theme" },
+    numberLocale: "en-GB",
     hero: {
         badge: "Internet radio hosting",
         title: "Your radio on air in minutes",
@@ -83,7 +89,7 @@ export const content = {
                 title: "Know your audience",
                 text: "Listeners live and over time, per station and format, in your dashboard.",
             },
-        ] satisfies { icon: FeatureIcon; title: string; text: string }[],
+        ] satisfies Feature[] as Feature[],
     },
     demo: {
         eyebrow: "Listen",
@@ -148,7 +154,7 @@ export const content = {
                     "Everything in Growth",
                 ],
             },
-        ] satisfies Plan[],
+        ] satisfies Plan[] as Plan[],
     },
     faq: {
         eyebrow: "FAQ",
@@ -181,9 +187,18 @@ export const content = {
         ],
     },
     footer: { terms: "Terms", privacy: "Privacy", download: "Download the app", signIn: "Sign in" },
+    notFound: {
+        code: "404 error",
+        title: "We can’t find that page",
+        text: "The page you are looking for doesn’t exist or has moved.",
+        home: "Back to the home page",
+    },
     meta: {
+        ogAlt: "Tropicast: your radio on air in minutes",
         title: "Tropicast: your radio on air in minutes",
         description:
             "Internet radio hosting: go live from your computer, AutoDJ when nobody is on air, listeners less than a second behind in Opus and MP3. Free plan, no card needed.",
     },
-} as const;
+};
+
+export type Content = typeof en;

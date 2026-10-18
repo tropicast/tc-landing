@@ -2,19 +2,16 @@
 
 import { Menu02, XClose } from "@untitledui/icons";
 import { Button as AriaButton, Dialog as AriaDialog, DialogTrigger as AriaDialogTrigger, Popover as AriaPopover } from "react-aria-components";
-import { content } from "@/site/content";
-import { APP_URL } from "@/site/links";
-import { sections } from "@/site/sections/sections";
 
-const { nav } = content;
+type Link = { href: string; label: string; hrefLang?: string };
 
-/** Below `md`: the sections and *Sign in* in a menu under the header. A link closes it. */
-export function MobileMenu() {
+/** Below `lg`: the sections, *Sign in*, *Start free* and the other language in a menu under the header. A link closes it. */
+export function MobileMenu({ label, title, sections, extra }: { label: string; title: string; sections: Link[]; extra: Link[] }) {
     return (
         <AriaDialogTrigger>
             <AriaButton
-                aria-label={nav.menu}
-                className="group flex size-10 items-center justify-center rounded-lg text-fg-secondary outline-focus-ring hover:bg-primary_hover focus-visible:outline-2 md:hidden"
+                aria-label={label}
+                className="group flex size-10 items-center justify-center rounded-lg text-fg-secondary outline-focus-ring hover:bg-primary_hover focus-visible:outline-2 lg:hidden"
             >
                 <Menu02 className="size-6 group-aria-expanded:hidden" aria-hidden="true" />
                 <XClose className="hidden size-6 group-aria-expanded:block" aria-hidden="true" />
@@ -22,28 +19,34 @@ export function MobileMenu() {
             <AriaPopover
                 placement="bottom end"
                 offset={12}
-                className="w-[calc(100vw-2rem)] max-w-sm rounded-xl bg-primary shadow-lg ring-1 ring-secondary_alt md:hidden"
+                className="w-[calc(100vw-2rem)] max-w-sm rounded-xl bg-primary shadow-lg ring-1 ring-secondary_alt lg:hidden"
             >
-                <AriaDialog aria-label={nav.sections} className="outline-hidden">
+                <AriaDialog aria-label={title} className="outline-hidden">
                     {({ close }) => (
                         <nav>
                             <ul className="flex flex-col py-2">
-                                {sections.map((section) => (
-                                    <li key={section.id}>
+                                {sections.map((link) => (
+                                    <li key={link.href}>
                                         <a
-                                            href={`#${section.id}`}
+                                            href={link.href}
                                             onClick={close}
                                             className="block px-4 py-3 text-md font-semibold text-primary hover:bg-primary_hover"
                                         >
-                                            {section.title}
+                                            {link.label}
                                         </a>
                                     </li>
                                 ))}
-                                <li className="mt-2 border-t border-secondary pt-2">
-                                    <a href={APP_URL} className="block px-4 py-3 text-md font-semibold text-secondary hover:bg-primary_hover">
-                                        {nav.signIn}
-                                    </a>
-                                </li>
+                                {extra.map((link, index) => (
+                                    <li key={link.href} className={index === 0 ? "mt-2 border-t border-secondary pt-2" : undefined}>
+                                        <a
+                                            href={link.href}
+                                            hrefLang={link.hrefLang}
+                                            className="block px-4 py-3 text-md font-semibold text-secondary hover:bg-primary_hover"
+                                        >
+                                            {link.label}
+                                        </a>
+                                    </li>
+                                ))}
                             </ul>
                         </nav>
                     )}
