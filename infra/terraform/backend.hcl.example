@@ -1,0 +1,22 @@
+# Copy to backend.hcl (git-ignored) and run: terraform init -backend-config=backend.hcl
+# Hetzner Object Storage (S3-compatible), the bucket tc-streaming and tc-dashboard use.
+# Credentials come from AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
+bucket = "tropicast-tfstate"
+key    = "tc-landing/landing.tfstate"
+region = "fsn1"
+
+endpoints = {
+  s3 = "https://fsn1.your-objectstorage.com"
+}
+
+use_path_style              = true
+skip_credentials_validation = true
+skip_region_validation      = true
+skip_requesting_account_id  = true
+skip_metadata_api_check     = true
+skip_s3_checksum            = true
+
+# No lock file: Hetzner Object Storage does not enforce S3 conditional writes, so a
+# lock file would not protect the state. Apply only through the Terraform deploy
+# workflow, which runs one at a time; use this file locally for plan, output and import.
+# use_lockfile = true
