@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**.md", LICENSE]
+  pull_request:
+    paths-ignore: ["**.md", LICENSE]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cancel superseded runs on pull requests only; every run on main finishes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  web:
+    name: Lint, test and build
+    runs-on: ${{ vars.RUNS_ON || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      - name: Install Chromium for Playwright
+        run: npm run test:e2e:install
+
+      - run: npm run test:e2e
+
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
