@@ -1,0 +1,12 @@
+Tropicast landing page
+Copyright 2026 Tropicast
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It includes Untitled UI React components (src/components, src/hooks, src/utils
+and parts of src/styles), Copyright (c) 2025 Untitled UI, under the MIT License
+(see src/components/LICENSE-UNTITLED-UI). The Inter font is downloaded at build
+time by next/font and is licensed under the SIL Open Font License 1.1.
+
+"Tropicast" and the Tropicast logo are trademarks of Tropicast. The license does
+not grant permission to use them, except to describe the origin of the work.

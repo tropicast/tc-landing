@@ -42,3 +42,10 @@ and kept as published. ESLint skips them, so they can be updated from upstream. 
 
 One issue, one branch (`feat/…`, `fix/…`, `docs/…`, `ci/…`) and one pull request. CI must pass before review. Add
 changes to the `Unreleased` section of [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Copyright 2026 Tropicast. Licensed under the [Apache License, Version 2.0](LICENSE);
+see [NOTICE](NOTICE). Untitled UI's components in `src/components`, `src/hooks` and `src/utils` remain under their
+MIT license ([src/components/LICENSE-UNTITLED-UI](src/components/LICENSE-UNTITLED-UI)). The license does not grant
+use of the Tropicast name or logo (section 6).

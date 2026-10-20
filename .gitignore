@@ -86,3 +86,6 @@ next-env.d.ts
 !*.tfvars.example
 backend.hcl
 tfplan
+
+# lighthouse
+/.lighthouseci/
