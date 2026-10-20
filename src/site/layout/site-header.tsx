@@ -6,9 +6,10 @@ import { MobileMenu } from "@/site/layout/mobile-menu";
 import { APP_URL, SIGN_UP_URL } from "@/site/links";
 import { sectionsOf } from "@/site/sections/sections";
 import { LinkButton } from "@/site/ui/link-button";
+import { Pill } from "@/site/ui/pill";
 
 /** Logo, links to the page's sections (a menu below `md`), language, theme toggle and the two calls to action. */
-export function SiteHeader({ t }: { t: Content }) {
+export function SiteHeader({ t, beta = false }: { t: Content; beta?: boolean }) {
     const { nav } = t;
     const lang = t.lang as Locale;
     const sections = sectionsOf(t).map((section) => ({ href: `#${section.id}`, label: section.title }));
@@ -22,6 +23,11 @@ export function SiteHeader({ t }: { t: Content }) {
                 <a href="#top" className="shrink-0 rounded-md outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2">
                     <Logo />
                 </a>
+                {beta && (
+                    <Pill color="brand" size="sm">
+                        {t.beta.badge}
+                    </Pill>
+                )}
                 <nav aria-label={nav.sections} className="ml-4 max-lg:hidden">
                     <ul className="flex items-center gap-6">
                         {sections.map((section) => (

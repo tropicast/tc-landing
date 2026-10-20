@@ -65,3 +65,12 @@ resource "vercel_project_environment_variable" "demo_station" {
   target     = ["production", "preview"]
   sensitive  = false
 }
+
+# Read at build time (src/site/stage.ts): changing it takes effect with the next deployment.
+resource "vercel_project_environment_variable" "site_stage" {
+  project_id = vercel_project.landing.id
+  key        = "SITE_STAGE"
+  value      = var.site_stage
+  target     = ["production", "preview"]
+  sensitive  = false
+}

@@ -58,3 +58,14 @@ variable "demo_station" {
   type        = string
   default     = null
 }
+
+variable "site_stage" {
+  description = "beta: the site shows a beta banner and badge (#23). At launch, set live and apply; the next build drops them."
+  type        = string
+  default     = "beta"
+
+  validation {
+    condition     = contains(["beta", "live"], var.site_stage)
+    error_message = "site_stage is beta or live."
+  }
+}

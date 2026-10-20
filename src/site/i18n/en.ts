@@ -24,6 +24,11 @@ export const en = {
     nav: { signIn: "Sign in", startFree: "Start free", menu: "Menu", close: "Close menu", sections: "Sections", language: "Language" },
     theme: { light: "Light theme", dark: "Dark theme" },
     numberLocale: "en-GB",
+    beta: {
+        badge: "Beta",
+        label: "Beta notice",
+        text: "Tropicast is in beta: the service works, but some features and prices may still change.",
+    },
     hero: {
         badge: "Internet radio hosting",
         title: "Your radio on air in minutes",

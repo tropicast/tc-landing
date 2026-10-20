@@ -60,3 +60,19 @@ describe.each(locales)("LandingPage (%s)", (lang) => {
         }
     });
 });
+
+describe.each(locales)("beta notice (%s)", (lang) => {
+    const t = getContent(lang);
+
+    it("shows the banner and the badge in beta", () => {
+        render(<LandingPage t={t} beta />);
+        expect(screen.getByRole("complementary", { name: t.beta.label })).toHaveTextContent(shown(t.beta.text));
+        expect(screen.getByRole("banner")).toHaveTextContent(t.beta.badge);
+    });
+
+    it("shows neither once live", () => {
+        render(<LandingPage t={t} beta={false} />);
+        expect(screen.queryByRole("complementary", { name: t.beta.label })).toBeNull();
+        expect(screen.getByRole("banner")).not.toHaveTextContent(t.beta.badge);
+    });
+});
