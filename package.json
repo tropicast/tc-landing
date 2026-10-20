@@ -12,7 +12,8 @@
         "format:check": "prettier --check .",
         "test": "vitest run",
         "test:e2e": "playwright test",
-        "test:e2e:install": "playwright install --with-deps chromium"
+        "test:e2e:install": "playwright install --with-deps chromium",
+        "test:lighthouse": "lhci autorun"
     },
     "dependencies": {
         "@internationalized/date": "^3.12.4",
@@ -42,6 +43,7 @@
     },
     "devDependencies": {
         "@axe-core/playwright": "^4.14.0",
+        "@lhci/cli": "^0.15.1",
         "@playwright/test": "^1.64.1",
         "@testing-library/jest-dom": "^7.0.1",
         "@testing-library/react": "^16.3.3",

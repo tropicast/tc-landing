@@ -7,6 +7,7 @@ import { Features } from "@/site/sections/features";
 import { Hero } from "@/site/sections/hero";
 import { HowItWorks } from "@/site/sections/how-it-works";
 import { Pricing } from "@/site/sections/pricing";
+import { StructuredData } from "@/site/structured-data";
 
 /** The whole page in one language, in the order of `sections.ts`. Mobile first: one column below `md`. */
 export function LandingPage({ t }: { t: Content }) {
@@ -22,6 +23,7 @@ export function LandingPage({ t }: { t: Content }) {
                 <Faq t={t} />
             </main>
             <SiteFooter t={t} />
+            <StructuredData t={t} />
         </>
     );
 }

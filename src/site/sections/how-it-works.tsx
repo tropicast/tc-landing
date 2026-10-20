@@ -1,8 +1,8 @@
-import { Button } from "@/components/base/buttons/button";
+import { Download01 } from "@untitledui/icons";
 import type { Content } from "@/site/i18n";
 import { INSTALL_GUIDE_URL, downloadUrl } from "@/site/links";
-import { DownloadButton } from "@/site/sections/download-button";
 import { Section } from "@/site/sections/section";
+import { LinkButton } from "@/site/ui/link-button";
 
 /** Three numbered steps, then the app's downloads (the hero's "Download the app" lands here). */
 export function HowItWorks({ t }: { t: Content }) {
@@ -25,13 +25,21 @@ export function HowItWorks({ t }: { t: Content }) {
                 <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                     {howItWorks.downloads.map((download) => (
                         <li key={download.platform}>
-                            <DownloadButton href={downloadUrl(download.platform)} label={download.label} />
+                            <LinkButton
+                                color="secondary"
+                                size="lg"
+                                icon={<Download01 data-icon aria-hidden="true" />}
+                                href={downloadUrl(download.platform)}
+                                className="w-full"
+                            >
+                                {download.label}
+                            </LinkButton>
                         </li>
                     ))}
                 </ul>
-                <Button color="link-color" size="md" href={INSTALL_GUIDE_URL} className="mt-4">
+                <LinkButton color="link-color" size="md" href={INSTALL_GUIDE_URL} className="mt-4">
                     {howItWorks.installGuide}
-                </Button>
+                </LinkButton>
             </div>
         </Section>
     );

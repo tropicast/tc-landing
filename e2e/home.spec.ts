@@ -11,7 +11,7 @@ test("on a phone, the menu lists the sections and a link closes it", async ({ pa
     test.skip(testInfo.project.name !== "mobile", "phones only");
     await page.goto("/en");
     await page.getByRole("button", { name: "Menu" }).click();
-    const menu = page.getByRole("dialog", { name: "Sections" });
+    const menu = page.getByRole("navigation", { name: "Sections" }).last();
     await menu.getByRole("link", { name: "Pricing" }).click();
     await expect(menu).toBeHidden();
     await expect(page).toHaveURL(/#pricing$/);

@@ -1,4 +1,3 @@
-import { Button } from "@/components/base/buttons/button";
 import { Logo } from "@/site/brand/logo";
 import { ThemeToggle } from "@/site/brand/theme-toggle";
 import { type Content, type Locale, getContent, locales } from "@/site/i18n";
@@ -6,6 +5,7 @@ import { LanguageSwitch } from "@/site/layout/language-switch";
 import { MobileMenu } from "@/site/layout/mobile-menu";
 import { APP_URL, SIGN_UP_URL } from "@/site/links";
 import { sectionsOf } from "@/site/sections/sections";
+import { LinkButton } from "@/site/ui/link-button";
 
 /** Logo, links to the page's sections (a menu below `md`), language, theme toggle and the two calls to action. */
 export function SiteHeader({ t }: { t: Content }) {
@@ -26,9 +26,9 @@ export function SiteHeader({ t }: { t: Content }) {
                     <ul className="flex items-center gap-6">
                         {sections.map((section) => (
                             <li key={section.href}>
-                                <Button color="link-gray" size="md" href={section.href}>
+                                <LinkButton color="link-gray" size="md" href={section.href}>
                                     {section.label}
-                                </Button>
+                                </LinkButton>
                             </li>
                         ))}
                     </ul>
@@ -38,12 +38,12 @@ export function SiteHeader({ t }: { t: Content }) {
                         <LanguageSwitch current={lang} label={nav.language} />
                     </div>
                     <ThemeToggle light={t.theme.light} dark={t.theme.dark} />
-                    <Button color="tertiary" size="md" href={APP_URL} className="max-md:hidden">
+                    <LinkButton color="tertiary" size="md" href={APP_URL} className="max-md:hidden">
                         {nav.signIn}
-                    </Button>
-                    <Button size="md" href={SIGN_UP_URL} className="max-sm:hidden">
+                    </LinkButton>
+                    <LinkButton size="md" href={SIGN_UP_URL} className="max-sm:hidden">
                         {nav.startFree}
-                    </Button>
+                    </LinkButton>
                     <MobileMenu
                         label={nav.menu}
                         title={nav.sections}
