@@ -22,11 +22,11 @@ export function LandingPage({ t, beta = isBeta() }: { t: Content; beta?: boolean
                 <HowItWorks t={t} />
                 <Features t={t} />
                 <Demo t={t} />
-                <Pricing t={t} />
+                <Pricing t={t} beta={beta} />
                 <Faq t={t} />
             </main>
             <SiteFooter t={t} />
-            <StructuredData t={t} />
+            <StructuredData t={t} beta={beta} />
         </>
     );
 }

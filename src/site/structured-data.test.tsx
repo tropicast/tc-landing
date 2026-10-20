@@ -14,6 +14,11 @@ describe("structured data", () => {
         ]);
     });
 
+    it("offers only Free during the beta", () => {
+        const app = structuredData(getContent("en"), true)["@graph"][2] as { offers: { name: string }[] };
+        expect(app.offers.map((offer) => offer.name)).toEqual(["Free"]);
+    });
+
     it("cannot be closed early by text in the content", () => {
         const t = getContent("en");
         const hostile = { ...t, faq: { ...t.faq, items: [{ question: "</script><script>alert(1)</script>", answer: "x" }] } };

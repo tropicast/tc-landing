@@ -75,5 +75,7 @@ toggle and that a phone never scrolls sideways.
 
 While `SITE_STAGE=beta` (#23, set by Terraform's `site_stage`), every page shows a thin banner above the header and
 a « Bêta » / "Beta" pill next to the logo, in the page's language. It is not dismissible: remembering a dismissal
-would need a cookie or storage, and the site keeps none. Search engines still index the site. At launch, see
+would need a cookie or storage, and the site keeps none. Paid plans can't be bought during the beta (tc-dashboard#149): the pricing cards keep their prices but show
+« Bientôt disponible » / "Available soon" and a sign-up button, and the structured data offers only Free (#26).
+Search engines still index the site. At launch, see
 [Infrastructure](infrastructure.md#launch-end-of-the-beta).

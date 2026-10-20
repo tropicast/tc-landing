@@ -111,6 +111,9 @@ export const en = {
         popular: "Most popular",
         cta: "Get started",
         ctaFree: "Start free",
+        soon: "Available soon",
+        introBeta: "Prices per month, in euros.",
+        betaNote: "Paid plans open at the end of the beta. Start free now and upgrade then.",
         listenersNote: "Listeners: how many people can listen at the same time.",
         plans: [
             {
