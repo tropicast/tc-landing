@@ -36,7 +36,7 @@ export const en = {
         primary: "Create a free station",
         secondary: "Download the app",
         note: "Free plan, no card needed.",
-        card: { station: "Radio Mada", live: "Live", listeners: "listeners", show: "Morning show", format: "Opus 64 kbps" },
+        card: { station: "Tropicast Radio", live: "Live", listeners: "listeners", show: "Morning show", format: "Opus 64 kbps" },
     },
     howItWorks: {
         eyebrow: "How it works",

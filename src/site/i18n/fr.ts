@@ -22,7 +22,7 @@ export const fr: Content = {
         primary: "Créer une station gratuite",
         secondary: "Télécharger l’application",
         note: "Offre gratuite, sans carte bancaire.",
-        card: { station: "Radio Mada", live: "En direct", listeners: "auditeurs", show: "La matinale", format: "Opus 64 kbit/s" },
+        card: { station: "Radio Tropicast", live: "En direct", listeners: "auditeurs", show: "La matinale", format: "Opus 64 kbit/s" },
     },
     howItWorks: {
         eyebrow: "Comment ça marche",
