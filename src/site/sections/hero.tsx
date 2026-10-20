@@ -1,8 +1,8 @@
 import { Headphones01, PlayCircle } from "@untitledui/icons";
-import { Badge, BadgeWithDot } from "@/components/base/badges/badges";
-import { Button } from "@/components/base/buttons/button";
 import type { Content } from "@/site/i18n";
 import { SIGN_UP_URL } from "@/site/links";
+import { LinkButton } from "@/site/ui/link-button";
+import { Pill } from "@/site/ui/pill";
 
 /** Headline, the two calls to action, and a picture of what a listener sees. */
 export function Hero({ t }: { t: Content }) {
@@ -11,20 +11,18 @@ export function Hero({ t }: { t: Content }) {
         <section aria-labelledby="hero-title" className="overflow-hidden bg-primary py-16 md:py-24">
             <div className="mx-auto grid max-w-container items-center gap-12 px-4 md:px-8 lg:grid-cols-2 lg:gap-16">
                 <div>
-                    <Badge type="pill-color" color="brand" size="md">
-                        {hero.badge}
-                    </Badge>
+                    <Pill color="brand">{hero.badge}</Pill>
                     <h1 id="hero-title" className="mt-4 text-display-md font-semibold text-primary md:text-display-xl">
                         {hero.title}
                     </h1>
                     <p className="mt-4 max-w-xl text-lg text-tertiary md:mt-6 md:text-xl">{hero.lead}</p>
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <Button size="xl" href={SIGN_UP_URL}>
+                        <LinkButton size="xl" href={SIGN_UP_URL}>
                             {hero.primary}
-                        </Button>
-                        <Button size="xl" color="secondary" href="#download">
+                        </LinkButton>
+                        <LinkButton size="xl" color="secondary" href="#download">
                             {hero.secondary}
-                        </Button>
+                        </LinkButton>
                     </div>
                     <p className="mt-4 text-sm text-tertiary">{hero.note}</p>
                 </div>
@@ -48,9 +46,9 @@ function StationCard({ t }: { t: Content }) {
                         <p className="truncate text-lg font-semibold text-primary">{card.station}</p>
                         <p className="text-sm text-tertiary">{card.show}</p>
                     </div>
-                    <BadgeWithDot type="pill-color" color="error" size="md">
+                    <Pill color="error" dot>
                         {card.live}
-                    </BadgeWithDot>
+                    </Pill>
                 </div>
                 <div className="mt-8 flex h-16 items-end gap-1" role="presentation">
                     {[40, 65, 30, 80, 55, 90, 45, 70, 35, 85, 60, 50, 75, 40, 95, 55, 65, 30, 80, 45, 70, 50, 60, 35].map((height, index) => (

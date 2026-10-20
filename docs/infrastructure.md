@@ -26,6 +26,7 @@ State: the shared bucket (`tropicast-tfstate`), key `tc-landing/landing.tfstate`
         vercel_team        = "<team slug>"                     # leave out for a personal account
         cloudflare_zone_id = "<32 hex: Cloudflare → Overview → API → Zone ID>"
         demo_station       = "<tenant-slug>/<station-slug>"   # optional: the live demo (#5)
+        site_stage         = "beta"                          # default; "live" at launch (#23)
         ```
 
 ## Plan and apply
@@ -57,6 +58,12 @@ dig +short app.tropicastradio.com listen.tropicastradio.com   # unchanged
 
 Vercel's domain card shows whether the records are right. If it asks for other values (a project-specific CNAME or
 another IP), set `vercel_cname_target` / `vercel_apex_ipv4` in `TFVARS` and apply again.
+
+## Launch (end of the beta)
+
+Set `site_stage = "live"` in `TFVARS` and run **Terraform deploy** (plan, then apply). It changes
+`SITE_STAGE` in Vercel; the next deployment (redeploy the latest from Vercel, or merge anything) builds the pages
+without the beta banner and badge.
 
 ## Roll back a release
 

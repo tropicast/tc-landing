@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
-import { RouteProvider } from "@/providers/router-provider";
 import { Theme } from "@/providers/theme";
 import { getContent, hasLocale, locales } from "@/site/i18n";
 import { SITE_URL } from "@/site/links";
@@ -30,7 +29,16 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
             canonical: `/${lang}`,
             languages: { ...Object.fromEntries(locales.map((locale) => [locale, `/${locale}`])), "x-default": "/" },
         },
-        openGraph: { type: "website", siteName: "Tropicast", locale: lang === "fr" ? "fr_FR" : "en_GB", url: `/${lang}` },
+        openGraph: {
+            type: "website",
+            siteName: "Tropicast",
+            title: t.meta.title,
+            description: t.meta.description,
+            locale: lang === "fr" ? "fr_FR" : "en_GB",
+            alternateLocale: lang === "fr" ? ["en_GB"] : ["fr_FR"],
+            url: `/${lang}`,
+        },
+        twitter: { card: "summary_large_image", title: t.meta.title, description: t.meta.description },
     };
 }
 
@@ -46,9 +54,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     return (
         <html lang={lang} suppressHydrationWarning>
             <body className={cx(inter.variable, "bg-primary antialiased")}>
-                <RouteProvider>
-                    <Theme>{children}</Theme>
-                </RouteProvider>
+                <Theme>{children}</Theme>
             </body>
         </html>
     );

@@ -1,8 +1,8 @@
-import { Button } from "@/components/base/buttons/button";
 import type { Content } from "@/site/i18n";
 import { SIGN_UP_URL, demoEmbedUrl } from "@/site/links";
 import { DemoPlayer } from "@/site/sections/demo-player";
 import { Section } from "@/site/sections/section";
+import { LinkButton } from "@/site/ui/link-button";
 
 /** Read at build time: the page is static. */
 export function Demo({ t, station = process.env.DEMO_STATION }: { t: Content; station?: string }) {
@@ -15,9 +15,9 @@ export function Demo({ t, station = process.env.DEMO_STATION }: { t: Content; st
             ) : (
                 <div className="flex flex-col items-start gap-4">
                     <p className="max-w-xl text-lg text-tertiary">{demo.unavailable}</p>
-                    <Button size="xl" href={SIGN_UP_URL}>
+                    <LinkButton size="xl" href={SIGN_UP_URL}>
                         {hero.primary}
-                    </Button>
+                    </LinkButton>
                 </div>
             )}
         </Section>

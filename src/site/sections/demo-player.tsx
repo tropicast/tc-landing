@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PlayCircle } from "@untitledui/icons";
-import { Button } from "@/components/base/buttons/button";
+import { buttonClass, buttonTextClass } from "@/site/ui/styles";
 
 /**
  * The demo station's embedded player (tc-dashboard `/embed/...`). It loads only when the visitor asks: the page stays
@@ -16,9 +16,12 @@ export function DemoPlayer({ embedUrl, title, play, loadNote }: { embedUrl: stri
     }
     return (
         <div className="flex flex-col items-start gap-3">
-            <Button size="xl" iconLeading={PlayCircle} onClick={() => setLoaded(true)}>
-                {play}
-            </Button>
+            <button type="button" className={buttonClass("primary", "xl")} onClick={() => setLoaded(true)}>
+                <PlayCircle data-icon aria-hidden="true" />
+                <span data-text className={buttonTextClass}>
+                    {play}
+                </span>
+            </button>
             <p className="text-sm text-tertiary">{loadNote}</p>
         </div>
     );

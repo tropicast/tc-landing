@@ -10,6 +10,11 @@ export const fr: Content = {
     nav: { signIn: "Se connecter", startFree: "Commencer gratuitement", menu: "Menu", close: "Fermer le menu", sections: "Sections", language: "Langue" },
     theme: { light: "Thème clair", dark: "Thème sombre" },
     numberLocale: "fr-FR",
+    beta: {
+        badge: "Bêta",
+        label: "Version bêta",
+        text: "Tropicast est en version bêta : le service fonctionne, mais certaines fonctionnalités et certains prix peuvent encore changer.",
+    },
     hero: {
         badge: "Hébergement de radio en ligne",
         title: "Votre radio à l’antenne en quelques minutes",

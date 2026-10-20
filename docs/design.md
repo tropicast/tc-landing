@@ -56,3 +56,24 @@ shows): change every language together. Write only what ships.
 
 Target WCAG 2.2 AA. `e2e/design.spec.ts` runs axe on the page in both themes (contrast included), checks the theme
 toggle and that a phone never scrolls sideways.
+
+## Search and speed
+
+- **Search engines**: `sitemap.xml` (both languages, with their alternates) and `robots.txt`; per language a
+  canonical URL, `hreflang` alternates, Open Graph and Twitter cards; schema.org JSON-LD (`src/site/structured-data.tsx`):
+  the organization, the site, the desktop app with the four plans as offers, and the FAQ.
+- **Little JavaScript**: links and buttons are plain `<a>`/`<button>` with Untitled UI's classes
+  (`src/site/ui/styles.ts`, `LinkButton`, `Pill`); the theme toggle and the phone menu are small hand-written
+  components. React Aria (what Untitled's interactive components are built on) was most of the page's script and is
+  no longer loaded. Keep it that way: an Untitled component with `"use client"` brings it back.
+- **Lighthouse CI** (`lighthouserc.cjs`, in CI after the e2e tests): both languages, mobile, median of three runs.
+  Accessibility, best practices and SEO (all 1.0) and CLS (0) fail the build. Speed only warns: Lighthouse simulates a
+  throttled phone from a trace taken at full speed, and the same build scores 0.79–0.97 from run to run on one
+  machine. Before #7 the live site scored 0.71–0.75 with up to 1.6 s of blocking time.
+
+## Beta notice
+
+While `SITE_STAGE=beta` (#23, set by Terraform's `site_stage`), every page shows a thin banner above the header and
+a « Bêta » / "Beta" pill next to the logo, in the page's language. It is not dismissible: remembering a dismissal
+would need a cookie or storage, and the site keeps none. Search engines still index the site. At launch, see
+[Infrastructure](infrastructure.md#launch-end-of-the-beta).

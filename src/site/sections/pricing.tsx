@@ -1,9 +1,9 @@
 import { Check } from "@untitledui/icons";
-import { Badge } from "@/components/base/badges/badges";
-import { Button } from "@/components/base/buttons/button";
 import type { Content } from "@/site/i18n";
 import { SIGN_UP_URL } from "@/site/links";
 import { Section } from "@/site/sections/section";
+import { LinkButton } from "@/site/ui/link-button";
+import { Pill } from "@/site/ui/pill";
 import { cx } from "@/utils/cx";
 
 export function Pricing({ t }: { t: Content }) {
@@ -24,9 +24,9 @@ export function Pricing({ t }: { t: Content }) {
                             <div className="flex items-center justify-between gap-2">
                                 <h3 className="text-lg font-semibold text-primary">{plan.name}</h3>
                                 {highlighted && (
-                                    <Badge type="pill-color" color="brand" size="sm">
+                                    <Pill color="brand" size="sm">
                                         {pricing.popular}
-                                    </Badge>
+                                    </Pill>
                                 )}
                             </div>
                             <p className="mt-4 flex items-baseline gap-1">
@@ -34,9 +34,9 @@ export function Pricing({ t }: { t: Content }) {
                                 {plan.period && <span className="text-md text-tertiary">{plan.period}</span>}
                             </p>
                             <p className="mt-2 text-md text-tertiary">{plan.summary}</p>
-                            <Button size="lg" color={highlighted ? "primary" : "secondary"} href={SIGN_UP_URL} className="mt-6 w-full">
+                            <LinkButton size="lg" color={highlighted ? "primary" : "secondary"} href={SIGN_UP_URL} className="mt-6 w-full">
                                 {plan.id === "free" ? pricing.ctaFree : pricing.cta}
-                            </Button>
+                            </LinkButton>
                             <ul className="mt-8 flex flex-col gap-3 border-t border-secondary pt-6">
                                 {plan.features.map((feature) => (
                                     <li key={feature} className="flex gap-3 text-md text-tertiary">

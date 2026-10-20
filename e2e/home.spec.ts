@@ -11,7 +11,7 @@ test("on a phone, the menu lists the sections and a link closes it", async ({ pa
     test.skip(testInfo.project.name !== "mobile", "phones only");
     await page.goto("/en");
     await page.getByRole("button", { name: "Menu" }).click();
-    const menu = page.getByRole("dialog", { name: "Sections" });
+    const menu = page.getByRole("navigation", { name: "Sections" }).last();
     await menu.getByRole("link", { name: "Pricing" }).click();
     await expect(menu).toBeHidden();
     await expect(page).toHaveURL(/#pricing$/);
@@ -29,4 +29,13 @@ test("an FAQ answer opens with the keyboard", async ({ page }) => {
 test("an unknown page answers 404", async ({ page }) => {
     const response = await page.goto("/en/no-such-page");
     expect(response?.status()).toBe(404);
+});
+
+test("during the beta, every page says so in its language", async ({ page }) => {
+    test.skip(process.env.SITE_STAGE !== "beta" && !process.env.CI, "built without SITE_STAGE=beta");
+    await page.goto("/fr");
+    await expect(page.getByRole("complementary", { name: "Version bêta" })).toContainText("Tropicast est en version bêta");
+    await expect(page.getByRole("banner").getByText("Bêta", { exact: true })).toBeVisible();
+    await page.goto("/en");
+    await expect(page.getByRole("complementary", { name: "Beta notice" })).toContainText("Tropicast is in beta");
 });

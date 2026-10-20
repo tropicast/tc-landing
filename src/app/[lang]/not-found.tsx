@@ -2,8 +2,8 @@
 
 import { ArrowLeft } from "@untitledui/icons";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/base/buttons/button";
 import { defaultLocale, getContent, hasLocale } from "@/site/i18n";
+import { LinkButton } from "@/site/ui/link-button";
 
 /** The 404 page, in the language of the URL (a not-found file gets no params). */
 export default function NotFound() {
@@ -23,9 +23,9 @@ export default function NotFound() {
                         <p className="text-lg text-tertiary md:text-xl">{notFound.text}</p>
                     </div>
                     <div>
-                        <Button size="xl" iconLeading={ArrowLeft} href={`/${lang}`}>
+                        <LinkButton size="xl" icon={<ArrowLeft data-icon aria-hidden="true" />} href={`/${lang}`}>
                             {notFound.home}
-                        </Button>
+                        </LinkButton>
                     </div>
                 </div>
             </div>
