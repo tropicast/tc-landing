@@ -103,6 +103,9 @@ export const fr: Content = {
         popular: "La plus choisie",
         cta: "Choisir cette offre",
         ctaFree: "Commencer gratuitement",
+        soon: "Bientôt disponible",
+        introBeta: "Prix par mois, en euros.",
+        betaNote: "Les offres payantes ouvriront à la fin de la bêta. Commencez gratuitement dès maintenant et changez d’offre à ce moment-là.",
         listenersNote: "Auditeurs : nombre de personnes qui peuvent écouter en même temps.",
         plans: [
             {

@@ -76,3 +76,31 @@ describe.each(locales)("beta notice (%s)", (lang) => {
         expect(screen.getByRole("banner")).not.toHaveTextContent(t.beta.badge);
     });
 });
+
+describe.each(locales)("pricing during the beta (%s)", (lang) => {
+    const t = getContent(lang);
+    const card = (name: string) =>
+        within(screen.getByRole("region", { name: t.pricing.title }))
+            .getByRole("heading", { level: 3, name })
+            .closest("li")!;
+
+    it("keeps the prices but offers only the sign-up, with paid plans marked available soon", () => {
+        render(<LandingPage t={t} beta />);
+        expect(screen.getByText(shown(t.pricing.betaNote))).toBeInTheDocument();
+        expect(screen.queryByText(shown(t.pricing.intro))).toBeNull();
+        for (const plan of t.pricing.plans) {
+            const item = card(plan.name);
+            expect(within(item).getByText(shown(plan.price))).toBeInTheDocument();
+            expect(within(item).getByRole("link")).toHaveTextContent(t.pricing.ctaFree);
+            if (plan.id === "free") expect(within(item).queryByText(t.pricing.soon)).toBeNull();
+            else expect(within(item).getByText(t.pricing.soon)).toBeInTheDocument();
+        }
+    });
+
+    it("is unchanged once live", () => {
+        render(<LandingPage t={t} beta={false} />);
+        expect(screen.queryByText(shown(t.pricing.betaNote))).toBeNull();
+        expect(within(card("Starter")).getByRole("link")).toHaveTextContent(t.pricing.cta);
+        expect(within(card("Starter")).getByText(t.pricing.popular)).toBeInTheDocument();
+    });
+});
