@@ -30,3 +30,12 @@ test("an unknown page answers 404", async ({ page }) => {
     const response = await page.goto("/en/no-such-page");
     expect(response?.status()).toBe(404);
 });
+
+test("during the beta, every page says so in its language", async ({ page }) => {
+    test.skip(process.env.SITE_STAGE !== "beta" && !process.env.CI, "built without SITE_STAGE=beta");
+    await page.goto("/fr");
+    await expect(page.getByRole("complementary", { name: "Version bêta" })).toContainText("Tropicast est en version bêta");
+    await expect(page.getByRole("banner").getByText("Bêta", { exact: true })).toBeVisible();
+    await page.goto("/en");
+    await expect(page.getByRole("complementary", { name: "Beta notice" })).toContainText("Tropicast is in beta");
+});

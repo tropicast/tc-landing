@@ -70,3 +70,10 @@ toggle and that a phone never scrolls sideways.
   Accessibility, best practices and SEO (all 1.0) and CLS (0) fail the build. Speed only warns: Lighthouse simulates a
   throttled phone from a trace taken at full speed, and the same build scores 0.79–0.97 from run to run on one
   machine. Before #7 the live site scored 0.71–0.75 with up to 1.6 s of blocking time.
+
+## Beta notice
+
+While `SITE_STAGE=beta` (#23, set by Terraform's `site_stage`), every page shows a thin banner above the header and
+a « Bêta » / "Beta" pill next to the logo, in the page's language. It is not dismissible: remembering a dismissal
+would need a cookie or storage, and the site keeps none. Search engines still index the site. At launch, see
+[Infrastructure](infrastructure.md#launch-end-of-the-beta).

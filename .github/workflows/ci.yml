@@ -33,7 +33,10 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      # As production during the beta (#23): the e2e, axe and Lighthouse checks cover the banner.
       - run: npm run build
+        env:
+          SITE_STAGE: beta
 
       - name: Install Chromium for Playwright
         run: npm run test:e2e:install
