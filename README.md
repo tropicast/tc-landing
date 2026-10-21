@@ -65,7 +65,8 @@ npm run test:e2e          # Playwright against the production build, mobile and 
 ```
 
 CI (`.github/workflows/ci.yml`) runs all of them on every pull request; `terraform.yml` validates the
-infrastructure.
+infrastructure. On the self-hosted GitLab, `.gitlab-ci.yml` runs the same checks, the shared security scans and the
+production deploy ([infrastructure](docs/infrastructure.md#gitlab-31)).
 
 ## Layout
 

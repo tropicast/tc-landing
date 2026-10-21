@@ -2,13 +2,16 @@ locals {
   www = "www.${var.domain}"
 }
 
-# Built and deployed by Vercel from GitHub: production from the production branch,
-# a preview for every other branch and pull request.
+# Linked to GitHub, Vercel builds and deploys it: production from the production
+# branch, a preview for every other branch and pull request. Unlinked
+# (github_repository = null, after the move to GitLab, tropicast/tc-devops#7),
+# GitLab CI deploys it with the Vercel CLI (.gitlab-ci.yml), and a private
+# repository needs no paid Vercel plan.
 resource "vercel_project" "landing" {
   name      = var.project_name
   framework = "nextjs"
 
-  git_repository = {
+  git_repository = var.github_repository == null ? null : {
     type              = "github"
     repo              = var.github_repository
     production_branch = var.production_branch

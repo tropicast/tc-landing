@@ -11,7 +11,7 @@ variable "project_name" {
 }
 
 variable "github_repository" {
-  description = "GitHub repository Vercel builds from (owner/name). Vercel's GitHub app must have access to it."
+  description = "GitHub repository Vercel builds from (owner/name); Vercel's GitHub app must have access to it. Null: no Git link, GitLab CI deploys with the Vercel CLI."
   type        = string
   default     = "tropicast/tc-landing"
 }

@@ -47,6 +47,51 @@ terraform init -backend-config=backend.hcl
 terraform plan
 ```
 
+## GitLab (#31)
+
+`.gitlab-ci.yml` runs the same checks as `.github/workflows` on the self-hosted GitLab (tropicast/tc-devops#1), plus
+the shared security jobs (`ci/security.yml` in tc-devops). Both run until the move to GitLab
+(tropicast/tc-devops#7).
+
+| GitHub                                   | GitLab job                                                         |
+| ---------------------------------------- | ------------------------------------------------------------------ |
+| `ci.yml` → Lint, test and build          | `web`                                                              |
+| `terraform.yml` → validate               | `terraform:validate` (when `infra/terraform` changes)              |
+| `terraform-deploy.yml`, plan / apply     | `terraform:plan`, then `terraform:apply` (manual, `main`)          |
+| Vercel's GitHub integration (production) | `deploy` (manual, `main`)                                          |
+| —                                        | `secret-detection`, `sast`, `dependency-scan`, `iac-scan`, `sonar` |
+
+Pull request previews have no GitLab equivalent: a preview build would need the Vercel token in merge request
+pipelines, which protected variables keep out.
+
+### Setup
+
+1. **Protected branch** `main`, and the **environment** `production` (Settings → CI/CD and Operate → Environments).
+   Optionally, require an approval to deploy to it.
+2. **CI/CD variables** (Settings → CI/CD → Variables), all **Protected**, the secrets also **Masked**:
+    - `VERCEL_API_TOKEN`, `CLOUDFLARE_API_TOKEN`, `TF_STATE_ACCESS_KEY`, `TF_STATE_SECRET_KEY`: as on GitHub;
+    - `TF_STATE_BUCKET` = `tropicast-tfstate`, `TF_STATE_LOCATION` = `fsn1`, `TFVARS`: as on GitHub;
+    - `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`: the team's and the project's IDs (Vercel → the project → Settings →
+      General, or `.vercel/project.json` after `vercel link`).
+
+### Plan, apply and deploy
+
+In the pipeline of a commit on `main`:
+
+- **Terraform**: start `terraform:plan` and read the plan in its log. Start `terraform:apply` to apply exactly that
+  plan. The `terraform-production` resource group runs one Terraform job at a time, which is the state's lock.
+- **Deploy**: start `deploy` once `web` has passed. It runs `vercel pull`, `vercel build --prod` and
+  `vercel deploy --prebuilt --prod`; Vercel's environment variables (`SITE_STAGE`, `DEMO_STATION`) apply as before.
+
+### Move to GitLab
+
+When the repository moves (tropicast/tc-devops#7):
+
+1. Add `github_repository = null` to `TFVARS`, then plan and apply. Vercel stops building from GitHub, and the
+   private repository needs no paid Vercel plan.
+2. From then on, production changes only through the `deploy` job.
+3. Remove `.github/workflows` and `.github/dependabot.yml`.
+
 ## Check
 
 ```sh
@@ -68,7 +113,7 @@ without the beta banner and badge.
 ## Roll back a release
 
 Vercel → the project → Deployments → a previous production deployment → **Instant Rollback**. Nothing to rebuild;
-the next push to `main` deploys again. Or revert the commit on `main`.
+the next deploy replaces it. Or revert the commit on `main` and deploy again.
 
 ## Remove
 

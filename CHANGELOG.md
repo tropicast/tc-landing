@@ -6,6 +6,8 @@ All notable changes to the landing page. Format: [Keep a Changelog](https://keep
 
 ### Added
 
+- GitLab CI (#31): `.gitlab-ci.yml` runs the GitHub workflows' checks on the self-hosted GitLab, with tc-devops's security scans, manual Terraform plan and apply, and a manual production deploy with the Vercel CLI. `github_repository = null` unlinks Vercel from GitHub at the move. See `docs/infrastructure.md`, GitLab.
+
 - Pricing during the beta (#26): paid plans keep their prices and limits but show « Bientôt disponible » / "Available soon", their button signs up for Free, and a note says they open at the end of the beta; the structured data offers only Free. Unchanged once `SITE_STAGE=live`.
 - Beta notice (#23): a banner above the header and a « Bêta » / "Beta" pill next to the logo, in both languages, while `SITE_STAGE=beta` (Terraform `site_stage`, `beta` by default). At launch, `site_stage = "live"`.
 - Search and speed (#7): `sitemap.xml`, `robots.txt`, Twitter cards and schema.org data (organization, site, desktop app with its plans, FAQ). Links, badges, the theme toggle and the phone menu no longer use React Aria, most of the page's script: Lighthouse performance 0.79–0.97 instead of 0.71–0.75. Lighthouse CI on both languages: accessibility, best practices, SEO and layout shift fail the build, speed warns.
