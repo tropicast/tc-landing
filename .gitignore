@@ -89,3 +89,6 @@ tfplan
 
 # lighthouse
 /.lighthouseci/
+
+# npm cache of the GitLab CI job
+/.npm

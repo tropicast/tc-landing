@@ -1,0 +1,150 @@
+# GitLab CI (#31, tropicast/tc-devops#1). Ports .github/workflows (ci.yml,
+# terraform.yml, terraform-deploy.yml), which stay until the move to GitLab
+# (tropicast/tc-devops#7), and replaces the deploy that Vercel's GitHub
+# integration did: GitLab builds and deploys with the Vercel CLI.
+#
+# Setup (protected variables, environments): docs/infrastructure.md, GitLab.
+
+stages: [test, scan, deploy]
+
+include:
+  - project: tropicast/tc-devops
+    ref: main
+    file: ci/security.yml
+
+# Merge requests and the default branch, plus manual runs. A branch with an
+# open merge request runs only the merge request pipeline.
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "web"
+  auto_cancel:
+    on_new_commit: interruptible
+
+# --- CI (ci.yml) --------------------------------------------------------------
+
+# The Playwright image ships Node 24 and Chromium with its system libraries.
+# Keep its version equal to @playwright/test in package.json.
+web:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.64.1-noble
+  interruptible: true
+  variables:
+    npm_config_cache: $CI_PROJECT_DIR/.npm
+  cache:
+    key:
+      files: [package-lock.json]
+    paths: [.npm]
+  script:
+    - npm ci
+    - npm run format:check
+    - npm run lint
+    - npm run typecheck
+    - npm test
+    # As production during the beta (#23): the e2e, axe and Lighthouse checks cover the banner.
+    - SITE_STAGE=beta npm run build
+    - npm run test:e2e
+    # Budgets in lighthouserc.cjs (#7). Lighthouse runs Playwright's Chromium.
+    - export CHROME_PATH="$(node -p "require('playwright-core').chromium.executablePath()")"
+    - LHCI_BUILD_CONTEXT__CURRENT_BRANCH="${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME:-$CI_COMMIT_REF_NAME}" npm run test:lighthouse
+  artifacts:
+    when: on_failure
+    expire_in: 7 days
+    paths:
+      - playwright-report/
+      - .lighthouseci/
+
+# --- Terraform (terraform.yml, terraform-deploy.yml) ---------------------------
+
+.terraform:
+  image:
+    name: hashicorp/terraform:1.16.5
+    entrypoint: [""]
+  variables:
+    TF_IN_AUTOMATION: "1"
+    TF_INPUT: "0"
+  before_script:
+    - cd infra/terraform
+
+terraform:validate:
+  extends: .terraform
+  stage: test
+  interruptible: true
+  rules:
+    - changes: [infra/terraform/**/*]
+  script:
+    - terraform fmt -check -recursive
+    - terraform init -backend=false
+    - terraform validate
+
+# Production, from the default branch only, each step started by hand: plan,
+# read it in the job log, then apply exactly that plan. The resource group
+# is the state's lock (Hetzner Object Storage has none), so two runs never
+# overlap. Protected variables: TFVARS, TF_STATE_BUCKET, TF_STATE_LOCATION,
+# TF_STATE_ACCESS_KEY, TF_STATE_SECRET_KEY, VERCEL_API_TOKEN,
+# CLOUDFLARE_API_TOKEN.
+.terraform:production:
+  extends: .terraform
+  stage: deploy
+  resource_group: terraform-production
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+  variables:
+    AWS_ACCESS_KEY_ID: $TF_STATE_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY: $TF_STATE_SECRET_KEY
+    STATE_BUCKET: $TF_STATE_BUCKET
+    STATE_LOCATION: $TF_STATE_LOCATION
+  before_script:
+    - cd infra/terraform
+    - sh ./ci-config.sh
+    - terraform init -backend-config=backend.hcl
+
+terraform:plan:
+  extends: .terraform:production
+  environment:
+    name: production
+    action: prepare
+  script:
+    - terraform plan -out=tfplan
+  artifacts:
+    # The plan holds the variables' values: developers and up only.
+    access: developer
+    expire_in: 3 days
+    paths: [infra/terraform/tfplan]
+
+terraform:apply:
+  extends: .terraform:production
+  needs: [terraform:plan]
+  environment:
+    name: production
+    action: access
+  script:
+    - terraform apply tfplan
+    - terraform output
+
+# --- Deploy (was Vercel's GitHub integration) ----------------------------------
+
+# Builds and deploys production with the Vercel CLI, after the checks of the
+# same pipeline. Vercel's environment variables (SITE_STAGE, DEMO_STATION)
+# come from the project, as before. Protected variables: VERCEL_API_TOKEN,
+# VERCEL_ORG_ID, VERCEL_PROJECT_ID.
+deploy:
+  stage: deploy
+  image: node:24.22.1-bookworm-slim
+  resource_group: production
+  needs: [web]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+  environment:
+    name: production
+    url: https://www.tropicastradio.com
+  script:
+    - npm install --global vercel@62.5.0
+    - vercel pull --yes --environment=production --token="$VERCEL_API_TOKEN"
+    - vercel build --prod --token="$VERCEL_API_TOKEN"
+    - vercel deploy --prebuilt --prod --token="$VERCEL_API_TOKEN"
