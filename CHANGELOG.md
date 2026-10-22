@@ -4,6 +4,10 @@ All notable changes to the landing page. Format: [Keep a Changelog](https://keep
 
 ## [Unreleased]
 
+### Fixed
+
+- Vulnerable dependencies of Lighthouse CI (#33): `basic-ftp`, `tmp` and `uuid` under `@lhci/cli` are overridden to their fixed versions (GHSA-c475-qrg2-pj4r, GHSA-ph9p-34f9-6g65, GHSA-w5hq-g745-h8pq), which the GitLab dependency scan flagged. Lighthouse CI runs unchanged.
+
 ### Added
 
 - GitLab CI (#31): `.gitlab-ci.yml` runs the GitHub workflows' checks on the self-hosted GitLab, with tc-devops's security scans, manual Terraform plan and apply, and a manual production deploy with the Vercel CLI. `github_repository = null` unlinks Vercel from GitHub at the move. See `docs/infrastructure.md`, GitLab.
